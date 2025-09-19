@@ -316,7 +316,8 @@ export default function Home() {
         <Image
           source={require("../../assets/images/Truck GoPick 1.png")}
           style={{
-            width: 349,
+            width: "100%",
+
             height: 183,
             marginTop: 20,
             borderTopLeftRadius: 10,
@@ -329,7 +330,7 @@ export default function Home() {
             flexDirection: "row",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: 349,
+            width: "100%",
             height: 71,
             backgroundColor: "#CDEBC9",
             padding: 20,
@@ -400,7 +401,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   vendorCard: {
-    width: 349,
+    width: "100%",
     height: 112.85,
     padding: 20,
     backgroundColor: "white",

@@ -6,21 +6,25 @@ import Button from "../components/Button";
 export default function HomeScreen() {
   const router = useRouter();
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "#439D25" }}>
       <View style={Styles.centered}>
         <Image
-          source={require("../assets/images/GoPickUp Logo.png")}
-          style={{ width: 190.74, height: 76 }}
+          source={require("../assets/images/GoPickUpWhite .png")}
+          style={{ width: 211, height: 84 }}
         />
         <StatusBar hidden={true} />
       </View>
       <View style={Styles.centered}>
         <Button
+          style={{ borderWidth: 1, borderColor: "white" }}
+          textStyle={{color:'white'}}
           title="Login"
           onPress={() => router.push("/login")}
           variant="outlined"
         />
         <Button
+          style={{ backgroundColor: "white" }}
+          textStyle={{color:'#439D25'}}
           title="Sign Up"
           onPress={() => router.push("/signup")}
           variant="filled"
@@ -38,12 +42,12 @@ export default function HomeScreen() {
           justifyContent: "center",
         }}
       >
-        <Text style={{ color: "#424441BD" }}>Keep Moving</Text>
+        <Text style={{ color: "white" }}>Keep Moving</Text>
       </View>
-      <Image
+      {/* <Image
         source={require("../assets/images/GreenMovement.png")}
         style={{ width: 430, height: 300, marginTop: 80 }}
-      />
+      /> */}
     </View>
   );
 }

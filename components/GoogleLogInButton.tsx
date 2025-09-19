@@ -9,7 +9,7 @@ const GoogleLogInButton: React.FC<Props> = ({ onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <View style={styles.content}>
-        <Text style={styles.text}>Login with Google</Text>
+        <Text style={styles.text}>Continue with Google</Text>
         <Image
           source={require("../assets/images/GoogleLogo.png")}
           style={{ width: 22.9, height: 22.9 }}
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 10.73,
-    color: "#000000A1",
+    color: "white",
     opacity: 63,
     fontWeight: "500",
     marginRight: 10,

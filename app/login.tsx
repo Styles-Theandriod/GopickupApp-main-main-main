@@ -1,6 +1,8 @@
 import GoogleLogInButton from "@/components/GoogleLogInButton";
-import React from "react";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
+  Alert,
   Image,
   StatusBar,
   StyleSheet,
@@ -9,52 +11,101 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useRouter } from "expo-router";
 export default function Login() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      Alert.alert("Invalid Email", "Please enter a valid email address.");
+      return;
+    }
+    if (!password) {
+      Alert.alert("Missing Password", "Please enter your password.");
+      return;
+    }
+
+    try {
+      const response = await fetch("https://your-backend.com/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Logged in:", data.user);
+        router.push("/info");
+      } else {
+        Alert.alert("Login Failed", data.message || "Invalid credentials");
+      }
+    } catch (error) {
+      Alert.alert("Error", "Something went wrong, try again.");
+    }
+  };
+
+  const handleForgotPassword = () => {
+    if (!email) {
+      alert("Enter your email to reset password");
+      return;
+    }
+    // 🔥 trigger password reset email
+    console.log("Send reset link to:", email);
+  };
   return (
-    
     <View
-    style={{
-      // justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#F8F9F8",
-      flex: 1,
-    }}
+      style={{
+        // justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#439D25",
+        flex: 1,
+      }}
     >
-    <StatusBar hidden={true} />
+      <StatusBar hidden={true} />
       <View style={Styles.centered}>
         <Image
-          source={require("../assets/images/GoPickUp Logo.png")}
+          source={require("../assets/images/GoPickUpWhite .png")}
           style={{ width: 190.74, height: 76 }}
         />
         <View style={Styles.LoginContainer}>
           <View style={Styles.MainLogin}>
             <View style={{ width: "90%" }}>
               <Text
-                style={{ marginBottom: 22, fontWeight: "700", fontSize: 22.52 }}
+                style={{
+                  marginBottom: 22,
+                  fontWeight: "700",
+                  fontSize: 22.52,
+                  marginTop: 15,
+                  color: "white",
+                }}
               >
                 Login
               </Text>
               <View>
-                <Text style={{ color: "#00000075" }}>Email:</Text>
+                <Text style={{ color: "white" }}>Email:</Text>
                 <TextInput
+                  value={email}
+                  onChangeText={setEmail}
                   style={{
                     height: 40,
-                    borderColor: "gray",
+                    borderColor: "white",
                     borderBottomWidth: 0.25,
                     width: "100%",
                   }}
                 />
               </View>
               <View>
-                <Text style={{ marginTop: 22, color: "#00000075" }}>
-                  Password:
-                </Text>
+                <Text style={{ marginTop: 22, color: "white" }}>Password:</Text>
                 <TextInput
+                  secureTextEntry
+                  value={password}
+                  onChangeText={setPassword}
                   style={{
                     height: 40,
-                    borderColor: "gray",
+                    borderColor: "white",
                     borderBottomWidth: 0.25,
                     width: "100%",
                   }}
@@ -66,9 +117,7 @@ export default function Login() {
                 marginTop: 22,
               }}
             >
-              <Text
-                style={{ color: "#2B6019", fontWeight: "700", fontSize: 9 }}
-              >
+              <Text style={{ color: "white", fontWeight: "700", fontSize: 9 }}>
                 Forget Password
               </Text>
             </TouchableOpacity>
@@ -78,26 +127,71 @@ export default function Login() {
                 console.log("Google Sign-In pressed");
               }}
             />
-          </View>
-          <TouchableOpacity
-            onPress={() => router.push("/info")}
-            style={{
-              marginTop: 22,
-              backgroundColor: "#439D25",
-              width: 96,
-              height: 39,
-              borderRadius: 100,
-              justifyContent: "center",
-              alignItems: "center",
-              marginLeft: 30,
-            }}
-          >
-            <Text
-              style={{ color: "white", fontWeight: "700", fontSize: 19.11 }}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
             >
-              Login
-            </Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  handleLogin();
+                }}
+                style={{
+                  marginTop: 22,
+                  backgroundColor: "white",
+                  width: 134,
+                  height: 50,
+                  borderRadius: 100,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  // marginLeft: 30,
+                  flexDirection: "row",
+                }}
+              >
+                <Image
+                  source={require("../assets/images/mynaui_face-id-solid.png")}
+                  style={{ width: 20, height: 20, tintColor: "#439D25" }}
+                />{" "}
+                <Text
+                  style={{
+                    color: "#439D25",
+                    fontWeight: "700",
+                    fontSize: 19.11,
+                    marginLeft: 5,
+                  }}
+                >
+                  Face ID
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  handleLogin();
+                }}
+                style={{
+                  marginTop: 22,
+                  backgroundColor: "#439D25",
+                  width: 134,
+                  height: 50,
+                  borderRadius: 100,
+                  borderWidth: 1,
+                  borderColor: "white",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginLeft: 10,
+                }}
+              >
+                <Text
+                  style={{ color: "white", fontWeight: "700", fontSize: 19.11 }}
+                >
+                  Login
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </View>
       <View
@@ -121,7 +215,7 @@ export default function Login() {
 const Styles = StyleSheet.create({
   centered: {
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 140,
   },
   LoginContainer: {
     marginTop: 20,
@@ -129,18 +223,18 @@ const Styles = StyleSheet.create({
     height: 281.4,
   },
   MainLogin: {
-    width: 260,
+    width: 305,
     // height: 281,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#439D25",
     borderRadius: 10,
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    shadowColor: "#2B60190D",
+    shadowColor: "black",
     shadowOffset: { width: 4, height: 4 },
     elevation: 5,
     marginHorizontal: "auto",
     marginTop: 50,
-    paddingVertical: 20,
+    // paddingVertical: 20,
     paddingHorizontal: 20,
   },
 });
