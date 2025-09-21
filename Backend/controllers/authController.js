@@ -1,36 +1,91 @@
+import pool from "../config/db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { createUser, findUserByEmail } from "../models/User.js";
 
+// Generate JWT
+const generateToken = (userId) => {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
+};
+
+// ✅ Signup
 export const signup = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const existingUser = await findUserByEmail(email);
-    if (existingUser) return res.status(400).json({ error: "User exists" });
+  const { name, email, phone, dob, bvn, password } = req.body;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await createUser(email, hashedPassword);
-    res.json({ message: "User created", user });
+  try {
+    // Check if user exists
+    const userExists = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (userExists.rows.length > 0) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Insert user
+    const newUser = await pool.query(
+      "INSERT INTO users (name, email, phone, dob, bvn, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [name, email, phone, dob, bvn, hashedPassword]
+    );
+
+    const token = generateToken(newUser.rows[0].id);
+
+    res.status(201).json({
+      user: newUser.rows[0],
+      token,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
+// ✅ Login
 export const login = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
-    const user = await findUserByEmail(email);
-    if (!user) return res.status(400).json({ error: "Invalid credentials" });
+    const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
 
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(400).json({ error: "Invalid credentials" });
+    if (user.rows.length === 0) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+    const validPassword = await bcrypt.compare(password, user.rows[0].password);
+    if (!validPassword) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    const token = generateToken(user.rows[0].id);
+
+    res.json({
+      user: user.rows[0],
+      token,
     });
-
-    res.json({ message: "Login successful", token });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+// ✅ Forgot Password (simple)
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+
+    if (user.rows.length === 0) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    // Normally: send email with reset link
+    res.json({ message: "Password reset link sent to your email (mocked)" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ✅ Google Auth (placeholder)
+export const googleAuth = async (req, res) => {
+  // Here you’ll integrate Google OAuth later
+  res.json({ message: "Google sign-in coming soon 🚀" });
 };
