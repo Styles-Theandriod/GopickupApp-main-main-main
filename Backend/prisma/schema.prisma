@@ -1,4 +1,22 @@
 datasource db {
-    provider = "postgreaql"
-    url = env("")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String?
+  phone     String?
+  dob       String?
+  bvn       String?  @unique
+  googleId  String?  @unique
+  createdAt DateTime @default(now())
+}
+
+

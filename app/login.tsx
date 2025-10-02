@@ -15,6 +15,7 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const API_URL = "http://192.168.0.255:5000";
 
   const handleLogin = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,7 +30,7 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch("https://your-backend.com/api/login", {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -43,7 +44,8 @@ export default function Login() {
         Alert.alert("Login Failed", data.message || "Invalid credentials");
       }
     } catch (error) {
-      Alert.alert("Error", "Something went wrong, try again.");
+      const errorMessage = typeof error === "object" && error !== null && "message" in error ? (error as { message: string }).message : "";
+      Alert.alert("Error", "Something went wrong, try again." + (errorMessage ? ` ${errorMessage}` : ""));
     }
   };
 
@@ -55,6 +57,8 @@ export default function Login() {
     // 🔥 trigger password reset email
     console.log("Send reset link to:", email);
   };
+
+  
   return (
     <View
       style={{

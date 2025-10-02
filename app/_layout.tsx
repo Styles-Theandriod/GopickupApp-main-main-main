@@ -1,7 +1,7 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import "react-native-reanimated";
+// import "react-native-reanimated";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -17,7 +17,7 @@ export default function RootLayout() {
       <StatusBar style="auto" />
       <Stack.Screen name="index" />
       <Stack.Screen name="info" />
-      <Stack.Screen name="tabs/" />   {/* ✅ just "tabs", not "tabs/layout" */}
+      <Stack.Screen name="tabs/" />   
       <Stack.Screen name="+not-found" />
     </Stack>
   );
