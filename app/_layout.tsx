@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Stack, usePathname } from "expo-router";
+import { Stack, usePathname, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 
 export default function RootLayout() {
   const [loaded, setLoaded] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Load fonts
+  // Load custom fonts
   useEffect(() => {
     (async () => {
       await Font.loadAsync({
@@ -17,19 +19,17 @@ export default function RootLayout() {
     })();
   }, []);
 
-  // Track and restore last visited route
-  const [initialRoute, setInitialRoute] = useState<null | string>(null);
-
+  // Restore last visited route
   useEffect(() => {
-    const restoreLastRoute = async () => {
+    (async () => {
       const lastRoute = await AsyncStorage.getItem("lastRoute");
-      if (lastRoute) setInitialRoute(lastRoute);
-    };
-    restoreLastRoute();
+      if (lastRoute && lastRoute !== pathname) {
+        router.replace(lastRoute as any);
+      }
+    })();
   }, []);
 
-  // Listen for route changes
-  const pathname = usePathname();
+  // Save route whenever it changes
   useEffect(() => {
     if (pathname) {
       AsyncStorage.setItem("lastRoute", pathname);
@@ -39,10 +39,7 @@ export default function RootLayout() {
   if (!loaded) return null;
 
   return (
-    <Stack
-      initialRouteName={initialRoute || "index"}
-      screenOptions={{ headerShown: false }}
-    >
+    <Stack screenOptions={{ headerShown: false }}>
       <StatusBar style="auto" />
       <Stack.Screen name="index" />
       <Stack.Screen name="info" />
