@@ -13,50 +13,9 @@ import {
 } from "react-native";
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const API_URL = "http://192.168.0.255:5000";
+  
 
-  const handleLogin = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
-      Alert.alert("Invalid Email", "Please enter a valid email address.");
-      return;
-    }
-    if (!password) {
-      Alert.alert("Missing Password", "Please enter your password.");
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Logged in:", data.user);
-        router.push("/info");
-      } else {
-        Alert.alert("Login Failed", data.message || "Invalid credentials");
-      }
-    } catch (error) {
-      const errorMessage = typeof error === "object" && error !== null && "message" in error ? (error as { message: string }).message : "";
-      Alert.alert("Error", "Something went wrong, try again." + (errorMessage ? ` ${errorMessage}` : ""));
-    }
-  };
-
-  const handleForgotPassword = () => {
-    if (!email) {
-      alert("Enter your email to reset password");
-      return;
-    }
-    // 🔥 trigger password reset email
-    console.log("Send reset link to:", email);
-  };
+  
 
   
   return (
@@ -91,8 +50,8 @@ export default function Login() {
               <View>
                 <Text style={{ color: "white" }}>Email:</Text>
                 <TextInput
-                  value={email}
-                  onChangeText={setEmail}
+                  // value={email}
+                  // onChangeText={setEmail}
                   style={{
                     height: 40,
                     borderColor: "white",
@@ -105,8 +64,8 @@ export default function Login() {
                 <Text style={{ marginTop: 22, color: "white" }}>Password:</Text>
                 <TextInput
                   secureTextEntry
-                  value={password}
-                  onChangeText={setPassword}
+                  // value={password}
+                  // onChangeText={setPassword}
                   style={{
                     height: 40,
                     borderColor: "white",
@@ -141,7 +100,7 @@ export default function Login() {
             >
               <TouchableOpacity
                 onPress={() => {
-                  handleLogin();
+                  // handleLogin();
                 }}
                 style={{
                   marginTop: 22,
@@ -171,9 +130,9 @@ export default function Login() {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
+                <TouchableOpacity
                 onPress={() => {
-                  handleLogin();
+                  router.push("/info2");
                 }}
                 style={{
                   marginTop: 22,
@@ -187,13 +146,13 @@ export default function Login() {
                   alignItems: "center",
                   marginLeft: 10,
                 }}
-              >
+                >
                 <Text
                   style={{ color: "white", fontWeight: "700", fontSize: 19.11 }}
                 >
                   Login
                 </Text>
-              </TouchableOpacity>
+                </TouchableOpacity>
             </View>
           </View>
         </View>
