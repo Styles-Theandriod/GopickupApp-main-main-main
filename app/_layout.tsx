@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import * as Font from "expo-font";
 import { Stack, usePathname, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Font from "expo-font";
 
 export default function RootLayout() {
   const [loaded, setLoaded] = useState(false);
@@ -30,21 +30,21 @@ export default function RootLayout() {
   }, []);
 
   // Save route whenever it changes
-  useEffect(() => {
-    if (pathname) {
-      AsyncStorage.setItem("lastRoute", pathname);
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   if (pathname) {
+  //     AsyncStorage.setItem("lastRoute", pathname);
+  //   }
+  // }, [pathname]);
 
-  if (!loaded) return null;
+  // if (!loaded) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <StatusBar style="auto" />
-      <Stack.Screen name="index" />
-      <Stack.Screen name="info" />
-      <Stack.Screen name="tabs" />
-      <Stack.Screen name="+not-found" />
-    </Stack>
+      <Stack screenOptions={{ headerShown: false }}>
+        <StatusBar style="auto" />
+        <Stack.Screen name="index" />
+        <Stack.Screen name="info" />
+        <Stack.Screen name="tabs" />
+        <Stack.Screen name="+not-found" />
+      </Stack>
   );
 }
