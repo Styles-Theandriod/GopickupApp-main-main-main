@@ -43,12 +43,13 @@ const profile = () => {
           style={{
             borderWidth: 1,
             width: 366,
-            paddingTop: 14,
-            paddingRight: 23,
+            height: 64,
             paddingLeft: 23,
-            paddingBottom: 14,
             borderRadius: 39,
             flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            backgroundColor: "white",
           }}
         >
           <Image
@@ -69,91 +70,101 @@ const profile = () => {
                 style={{
                   color: "white",
                   backgroundColor: "#439D25",
-                  fontSize: 10,
+                  fontSize: 15,
+                  // height: 11.23,
+                  // width: 37.93,
+                  textAlign: "center",
+                  paddingHorizontal: 4,
+                  borderRadius: 100,
+                  fontWeight: "600",
                 }}
               >
                 User ID
               </Text>
-              <Text>D422Q7827</Text>
+              <Text style={{ color: "#1E1E1E", fontWeight: "300", marginLeft: 4 }}>D422Q7827</Text>
             </View>
           </View>
         </View>
       </View>
+      
       <View
-        style={{ marginTop: 20, flexDirection: "row", gap: 10, marginLeft: 20 }}
+        style={{ marginTop: 4, flexDirection: "row", gap: 10, marginLeft: 20, padding: 10 }}
       >
         <Text style={{ fontWeight: "600", color: "#374151" }}>
           Account Info
         </Text>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
-      {/* Name */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Name:</Text>
-        <Text style={styles.value}>Azih Monica</Text>
-      </View>
-      <View style={styles.divider} />
+        {/* Name */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Name:</Text>
+          <TextInput style={[styles.value, { width: "70%" }]} />
+        </View>
+        <View style={styles.divider} />
 
-      {/* Phone */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Phone No:</Text>
-        <Text style={styles.value}>+234 000 000 0000</Text>
-      </View>
-      <View style={styles.divider} />
+        {/* Phone */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Phone No:</Text>
+          <TextInput style={[styles.value, { width: "70%" }]} />
+        </View>
+        <View style={styles.divider} />
 
-      {/* Location */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Location:</Text>
-        <Text style={styles.value}>Nigeria, Abuja</Text>
-      </View>
-      <View style={styles.divider} />
+        {/* Location */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Location:</Text>
+          <TextInput style={[styles.value, { width: "70%" }]} />
+        </View>
+        <View style={styles.divider} />
 
-      {/* Email */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Email:</Text>
-        <Text style={styles.value}>Azihmonica@gmail.com</Text>
-      </View>
-      <View style={styles.divider} />
+        {/* Email */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Email:</Text>
+          <TextInput style={[styles.value, { width: "70%" }]} />
+        </View>
+        <View style={styles.divider} />
 
-      {/* Last Delivery */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Last Delivery:</Text>
-        <Text style={styles.value}>May 6th, 2025</Text>
-      </View>
+        {/* Last Delivery */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Last Delivery:</Text>
+          <TextInput style={[styles.value, { width: "70%" }]} />
+        </View>
 
-      {/* Item Delivered */}
-      <Text style={styles.subText}>
-        <Text style={{ fontWeight: "600" }}>Item delivered:</Text> 2 trips of coal
-      </Text>
-
-      {/* Total Delivery */}
-      <View style={styles.deliveryBox}>
-        <Text style={styles.deliveryText}>
-          Total Delivery: <Text style={styles.deliveryCount}>30</Text>{" "}
-          <Text style={styles.successText}>Successful</Text>
+        {/* Item Delivered */}
+        <Text style={styles.subText}>
+          <Text style={{ fontWeight: "600" }}>Item delivered:</Text> 2 trips of
+          coal
         </Text>
-      </View>
 
-      {/* Warning */}
-      <View style={styles.warningBox}>
-        {/* <Feather name="alert-triangle" size={18} color="#EAB308" /> */}
-            <Ionicons name="ellipsis-vertical" size={28} color="black" />
+        {/* Total Delivery */}
+        <View style={styles.deliveryBox}>
+          <Text style={styles.deliveryText}>
+            Total Delivery: <Text style={styles.deliveryCount}>30</Text>{" "}
+            <Text style={styles.successText}>Successful</Text>
+          </Text>
+        </View>
 
-        <Text style={styles.warningText}>You can only edit your profile once a month.</Text>
-      </View>
+        {/* Warning */}
+        <View style={styles.warningBox}>
+          {/* <Feather name="alert-triangle" size={18} color="#EAB308" /> */}
+          <Ionicons name="warning" size={28} color="black" />
 
-      {/* Delete Account */}
-      <TouchableOpacity style={styles.deleteBtn}>
-        {/* <MaterialIcons name="delete-outline" size={20} color="red" /> */}
-            <Ionicons name="ellipsis-vertical" size={28} color="black" />
-        <Text style={styles.deleteText}>Delete Account</Text>
-      </TouchableOpacity>
+          <Text>You can only edit your profile once a month.</Text>
+        </View>
 
-      {/* Edit Button */}
-      <TouchableOpacity style={styles.editBtn}>
-        <Text style={styles.editText}>Edit</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        {/* Delete Account */}
+        <TouchableOpacity style={styles.deleteBtn}>
+          {/* <MaterialIcons name="delete-outline" size={20} color="red" /> */}
+          <Ionicons name="trash" size={20} color="orange" />
+          <Text style={styles.deleteText}>Delete Account</Text>
+        </TouchableOpacity>
+
+        {/* Edit Button */}
+        <View style={{ alignItems: "flex-end", marginBottom: 30, marginRight: 20 }}>
+          <TouchableOpacity style={styles.editBtn}>
+            <Text style={styles.editText}>Edit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
       <StatusBar hidden={true} />
     </View>
   );
@@ -163,14 +174,15 @@ export default profile;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 30,
     backgroundColor: "#fff",
     flexGrow: 1,
   },
   row: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
+    // justifyContent: "space-around",
+    alignItems: "center",
+    // marginBottom: 10,
   },
   label: {
     fontWeight: "700",
@@ -179,6 +191,7 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 15,
     color: "#333",
+    marginLeft: 10,
   },
   divider: {
     height: 1,
@@ -192,13 +205,14 @@ const styles = StyleSheet.create({
   },
   deliveryBox: {
     backgroundColor: "#ECFDF5",
-    padding: 12,
+    padding: 8,
     borderRadius: 10,
     marginVertical: 20,
+    width: "60%",
   },
   deliveryText: {
     fontWeight: "700",
-    textAlign: "center",
+    textAlign: "left",
   },
   deliveryCount: {
     fontSize: 18,
@@ -211,8 +225,8 @@ const styles = StyleSheet.create({
   warningBox: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFBEB",
-    padding: 10,
+    // backgroundColor: "#FFFBEB",
+    // padding: 10,
     borderRadius: 8,
     marginBottom: 25,
   },
@@ -225,8 +239,9 @@ const styles = StyleSheet.create({
   deleteBtn: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     marginBottom: 30,
+    // marginTop: ,
   },
   deleteText: {
     color: "red",
@@ -238,6 +253,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 30,
     alignItems: "center",
+    width: 84,
   },
   editText: {
     color: "#fff",

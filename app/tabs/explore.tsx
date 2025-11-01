@@ -92,7 +92,7 @@ const Explore = () => {
         </View>
 
         {/* Vendor Card */}
-        <View style={styles.vendorCard}>
+        {/* <View style={styles.vendorCard}>
           <Image
             source={require("../../assets/images/Futures 1.png")}
             style={{ width: 68.94, height: 62.85, marginRight: 10 }}
@@ -105,7 +105,7 @@ const Explore = () => {
               Begin your journey to great business values
             </Text>
           </View>
-        </View>
+        </View> */}
 
         {/* Save More Card */}
         <View style={styles.saveMoreCard}>
@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     borderColor: "#439D25",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 20,
     paddingHorizontal: 20,
   },

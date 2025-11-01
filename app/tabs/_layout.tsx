@@ -10,9 +10,10 @@ export default function TabsLayout() {
 
           if (route.name === "home") iconName = "home-outline";
           else if (route.name === "explore") iconName = "search-outline";
+          else if (route.name === "chat") iconName = "chatbubble-outline";
           else if (route.name === "notifications") iconName = "notifications-outline";
           else if (route.name === "profile") iconName = "person-outline";
-          else if (route.name === "settings") iconName = "globe-outline";
+          else if (route.name === "map") iconName = "globe-outline";
 
           return <Ionicons name={iconName} size={25} color={color} />; // ✅ bigger icon
         },
@@ -32,10 +33,11 @@ export default function TabsLayout() {
       })}
     >
       <Tabs.Screen name="home" options={{ title: "Home" }} />
+      <Tabs.Screen name="chat" options={{ title: "Chat" }} />
       <Tabs.Screen name="explore" options={{ title: "Explore" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
       <Tabs.Screen name="notifications" options={{ title: "Notification" }} />
-      <Tabs.Screen name="settings" options={{ title: "Map" }} />
+      <Tabs.Screen name="map" options={{ title: "Map" }} />
     </Tabs>
   );
 }
